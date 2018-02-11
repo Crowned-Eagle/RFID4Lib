@@ -1,0 +1,17 @@
+//This File will keep track of all Expenses we had & will make for this Project.
+//The Format for Typing your Expenses is as following: 
+
+[Person's Name], [Amount], [Purpose]
+
+E.g. If Dattaraj makes any payment towards the Project, Just add it as follows:
+Dattaraj, Rs.XXX, For Hex Keypad
+
+//Use comma (,) to seperate name from Amount and Purpose
+
+//Please maintain this format so that I can just copy paste the expense data into text file and name it Expense.csv 
+//This will enable us to export our expense data directly into 
+//Libre Office Calc or Microsoft Office Excel compatible format for record keeping purposes.
+
+_________________________________________________________________________________________________________
+                          START TYPING EXPENSES LOGS BELOW THIS LINE
+_________________________________________________________________________________________________________
