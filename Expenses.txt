@@ -6,5 +6,7 @@
 E.g. If Dattaraj makes any payment towards the Project, Just add it as follows:
 Dattaraj, Rs.XXX, For Hex Keypad
 
-//Please maintain this format as I can just copy paste it into text file and name it Expense.csv So use comma (,) to seperate name from Amount and Purpose
-//So that I open it in Libre Office Calc or Microsoft Office Excel
+//Use comma (,) to seperate name from Amount and Purpose
+
+//Please maintain this format so that I can just copy paste the expense data into text file and name it Expense.csv 
+//This will enable us to export our expense data directly into Libre Office Calc or Microsoft Office Excel compatible format for record keeping purposes.
