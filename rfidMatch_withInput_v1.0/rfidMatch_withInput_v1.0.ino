@@ -10,11 +10,11 @@ void setup()
 }
 void loop()
 {
-  Serial.flush();
+  //Serial.flush();
   //while (!Serial.available());
   if (Serial.available() == 12)
   {
-    Serial.readBytes(cardInput,12);
+    Serial.readBytes(cardInput, 12);
 
     Serial.print("Card ID - ");
     Serial.println(cardInput);      // Print RFID tag number
@@ -27,8 +27,6 @@ void loop()
       Serial.println("Yes, we got it!");
 
   }
-  else
-    Serial.println(Serial.available());
 
   if (Serial.available() == 5)
   {
@@ -36,6 +34,12 @@ void loop()
     Serial.print("User Input - ");
     Serial.println(userInput);
   }
+
+  if (Serial.available() != 12 && Serial.available() != 5)
+    for (count = 0; count < Serial.available(); count++)
+      Serial.read();
+
+
   delayMicroseconds(500);
 
 }
