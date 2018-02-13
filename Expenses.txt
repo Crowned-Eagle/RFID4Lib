@@ -15,4 +15,4 @@ Dattaraj, Rs.XXX, For Hex Keypad
 _________________________________________________________________________________________________________
                           START TYPING EXPENSES LOGS BELOW THIS LINE
 _________________________________________________________________________________________________________
-Akshay, 170+32+20=222, 1)LCD Display 2)HookUp Wires 3)Connector Strip 4)
+Akshay, 170+32+20=222, 1)LCD Display 2)HookUp Wires 3)Connector Strip
