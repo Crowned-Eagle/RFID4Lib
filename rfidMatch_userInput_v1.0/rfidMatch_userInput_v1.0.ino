@@ -1,4 +1,3 @@
-int count = 0;                                    // count = 0
 char userInput[5];
 
 void setup()
@@ -19,12 +18,12 @@ void loop()
     {
       userInput[i] = Serial.read();
     }
-    
+
     while (Serial.available() > 0)
     {
       Serial.read();
     }
-    
+
     Serial.print("User Input - ");
     Serial.println(userInput);
   }
