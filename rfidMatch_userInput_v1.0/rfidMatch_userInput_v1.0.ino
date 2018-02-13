@@ -9,11 +9,13 @@ void setup()
 void loop()
 {
     if (Serial.available() > 5)
-    { Serial.read(); }
+    {
+       Serial.read();
+    }
     
     else if (Serial.available() < 5)
     {
-    	
+    	Serial.read();
     }
     
     else
