@@ -6,7 +6,7 @@
 E.g. If Dattaraj makes any payment towards the Project, Just add it as follows:
 Dattaraj, Rs.XXX, For Hex Keypad
 
-//Use comma (,) to seperate name from Amount and Purpose
+//Use comma ( , ) to seperate name from Amount and Purpose
 
 //Please maintain this format so that I can just copy paste the expense data into text file and name it Expense.csv 
 //This will enable us to export our expense data directly into 
@@ -15,4 +15,5 @@ Dattaraj, Rs.XXX, For Hex Keypad
 _________________________________________________________________________________________________________
                           START TYPING EXPENSES LOGS BELOW THIS LINE
 _________________________________________________________________________________________________________
-Akshay, ___, LCD Display
+Akshay, 170+32+20=222, LCD Display; HookUp Wires; Connector Strip
+Dattaraj, 135, Hex Keypad Ebay
