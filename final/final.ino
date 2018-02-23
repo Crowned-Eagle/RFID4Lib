@@ -1,13 +1,10 @@
+#include <Keypad.h>
+#include <Key.h>
 #include <LiquidCrystal.h>
-#define ACTIVE LOW
-#define INACTIVE HIGH
 
-byte i, j;
-byte c[4] = {14, 15, 16, 17}, r[4] = {18, 19, 20, 21}; //these are pins from hex keypad, which is to be changed, such that they will not conflict with lcd pins
-byte buttonCode, prevButtonCode;
-boolean keyDown;
+byte i, c[4] = {14, 15, 16, 17}, r[4] = {18, 19, 20, 21};
 byte userInput[5], userIpCount, userCode[3], cardInput[12];
-int t;
+boolean searchOn;
 
 /*
   The circuit for LCD:
@@ -26,76 +23,30 @@ int t;
 */
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+byte keyMap[4][4] = {{1, 2, 3, 10},
+  {4, 5, 6, 11},
+  {7, 8, 9, 12},
+  {14, 0, 15, 13}
+};
+//Keypad constructor ==> (makeKeymap(keys array), row array, column array,no. of rows, no. of columns)
+Keypad  keypad = Keypad(makeKeymap(keyMap), r, c, 4, 4);
 
 void setup()
 {
-  for (i = 0; i < 4; i++)
-  {
-    pinMode(c[i], OUTPUT);
-    pinMode(r[i], INPUT_PULLUP);
-  }
   Serial.begin(9600);
+  keypad.addEventListener(keypadEvent);
   lcd.begin(16, 2);
-  prevButtonCode = 16;
-  buttonCode = 16;
-  keyDown = false;
-  userIpCount = 0;
   lcd.clear();
   lcd.print("Enter Book-Code:");
   lcd.setCursor(5, 1);
   lcd.blink();
+  searchOn = false;
 }
 
 void loop()
 {
-  buttonCode = 16;
-  for (i = 0; i < 4; i++)
+  if (searchOn)
   {
-    for (byte k = 0; k < 4; k++)
-      if (k == i)
-        digitalWrite(c[k], ACTIVE);
-      else
-        digitalWrite(c[k], INACTIVE);
-    for (j = 0; j < 4; j++)
-      if (digitalRead(r[j]) == ACTIVE)
-      {
-        buttonCode = 4 * i + j;
-        if (buttonCode == prevButtonCode)
-          keyDown = false;
-        else
-        {
-          keyDown = true;
-          delay(5);
-        }
-      }
-  }
-  if (buttonCode < 16 && keyDown)
-  {
-    userInput[userIpCount++] = buttonCode;
-    if (userIpCount == 5)
-    {
-      userIpCount = 0;
-      userCode[0] = userInput[0];
-      userCode[1] = 16 * userInput[1] + userInput[2];
-      userCode[2] = 16 * userInput[3] + userInput[4];
-      delay(500);
-      lcd.clear();
-      lcd.noCursor();
-      lcd.setCursor(4, 0);
-      lcd.print("Searching");
-    }
-  }
-  if (userIpCount == 1)
-  {
-    lcd.clear();
-    lcd.print("Enter Book-Code:");
-    lcd.setCursor(5, 1);
-    lcd.blink();
-  }
-
-  if (!userIpCount)
-  {
-    //rest of the code
     if (Serial.available())
     {
       Serial.readBytes(cardInput, 12);
@@ -107,19 +58,36 @@ void loop()
       }
       if (i == 3)
       {
-        lcd.setCursor(2, 1);
-        lcd.print("            ");
+        lcd.clear();
         lcd.setCursor(2, 1);
         lcd.print("Book found!");
       }
-      else
-      {
-        lcd.setCursor(5, 1);
-        lcd.print("       ");
-        lcd.setCursor(5, 1);
-        for (j = 0; j < byte(millis() % 6000); j++)
-          lcd.write('-');
-      }
     }
+  }
+}
+
+void keypadEvent(KeypadEvent key)
+{
+  if (!userIpCount)
+  {
+    searchOn = false;
+    lcd.clear();
+    lcd.print("Enter Book-Code:");
+    lcd.setCursor(5, 1);
+    lcd.blink();
+  }
+  userInput[userIpCount++] = key;
+  if (userIpCount == 5)
+  {
+    userIpCount = 0;
+    userCode[0] = userInput[0];
+    userCode[1] = 16 * userInput[1] + userInput[2];
+    userCode[2] = 16 * userInput[3] + userInput[4];
+    delay(500);
+    lcd.clear();
+    lcd.noCursor();
+    lcd.setCursor(4, 0);
+    lcd.print("Searching");
+    searchOn = true;
   }
 }
