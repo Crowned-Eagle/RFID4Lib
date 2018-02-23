@@ -3,9 +3,9 @@
 #define INACTIVE HIGH
 
 byte i, j;
-byte c[4] = {6, 7, 8, 9}, r[4] = {10, 11, 12, 13};    //these are pins from hex keypad, which is to be changed, such that they will not conflict with lcd pins
-byte code;
-byte cCaptured, rCaptured;
+byte c[4] = {14, 15, 16, 17}, r[4] = {18, 19, 20, 21}; //these are pins from hex keypad, which is to be changed, such that they will not conflict with lcd pins
+byte buttonCode, prevButtonCode;
+boolean keyDown;
 byte userInput[5], userIpCount, userCode[3], cardInput[12];
 int t;
 
@@ -36,6 +36,9 @@ void setup()
   }
   Serial.begin(9600);
   lcd.begin(16, 2);
+  prevButtonCode = 16;
+  buttonCode = 16;
+  keyDown = false;
   userIpCount = 0;
   lcd.clear();
   lcd.print("Enter Book-Code:");
@@ -45,8 +48,7 @@ void setup()
 
 void loop()
 {
-  rCaptured = 4;
-  cCaptured = 4;
+  buttonCode = 16;
   for (i = 0; i < 4; i++)
   {
     for (byte k = 0; k < 4; k++)
@@ -57,13 +59,19 @@ void loop()
     for (j = 0; j < 4; j++)
       if (digitalRead(r[j]) == ACTIVE)
       {
-        rCaptured = j;
-        cCaptured = i;
+        buttonCode = 4 * i + j;
+        if (buttonCode == prevButtonCode)
+          keyDown = false;
+        else
+        {
+          keyDown = true;
+          delay(5);
+        }
       }
   }
-  if ((cCaptured * 4 + rCaptured) < 16)
+  if (buttonCode < 16 && keyDown)
   {
-    userInput[userIpCount++] = cCaptured * 4 + rCaptured;
+    userInput[userIpCount++] = buttonCode;
     if (userIpCount == 5)
     {
       userIpCount = 0;
