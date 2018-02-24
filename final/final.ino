@@ -3,7 +3,7 @@
 #include <LiquidCrystal.h>
 
 byte i, r[4] = {14, 15, 16, 17}, c[4] = {18, 19, 20, 21};
-char userInput[5], userIpCount, userCode[3], cardInput[12];
+char userInput[5], userIpCount, cardInput[12];
 boolean searchOn;
 
 /*
@@ -40,33 +40,29 @@ void setup()
   lcd.print("Enter Book-Code:");
   lcd.setCursor(5, 1);
   lcd.blink();
-  searchOn=false;
+  searchOn = false;
 }
 
 void loop()
 {
-  if (!userIpCount)
-  {
-    searchOn = false;
-    lcd.clear();
-    lcd.print("Enter Book-Code:");
-    lcd.setCursor(5, 1);
-    lcd.blink();
-  }
   char key;
   key = keypad.getKey();
   if (key)
   {
+    if (!userIpCount)
+    {
+      searchOn = false;
+      lcd.clear();
+      lcd.print("Enter Book-Code:");
+      lcd.setCursor(5, 1);
+      lcd.blink();
+    }
     userInput[userIpCount++] = key;
     lcd.print(key);
   }
   if (userIpCount == 5)
   {
     userIpCount = 0;
-   /* userCode[0] = userInput[0];
-    userCode[1] = 16 * userInput[1] + userInput[2];
-    userCode[2] = 16 * userInput[3] + userInput[4];
-    */
     delay(500);
     lcd.clear();
     lcd.noCursor();
@@ -81,13 +77,12 @@ void loop()
       Serial.readBytes(cardInput, 12);
       Serial.print("card id - ");
       Serial.println(cardInput);
-      cardInput[8] %= 16;
       for (i = 0; i < 5; i++)
       {
-        if (cardInput[i +6] != userInput[i])
+        if (cardInput[i + 6] != userInput[i])
           break;
       }
-      if (i == 3)
+      if (i == 5)
       {
         lcd.clear();
         lcd.setCursor(2, 1);
@@ -95,4 +90,7 @@ void loop()
       }
     }
   }
+  else
+    while (Serial.available())
+      Serial.read();
 }
