@@ -2,8 +2,8 @@
 #include <Key.h>
 #include <LiquidCrystal.h>
 
-byte i, c[4] = {14, 15, 16, 17}, r[4] = {18, 19, 20, 21};
-byte userInput[5], userIpCount, userCode[3], cardInput[12];
+byte i, r[4] = {14, 15, 16, 17}, c[4] = {18, 19, 20, 21};
+char userInput[5], userIpCount, userCode[3], cardInput[12];
 boolean searchOn;
 
 /*
@@ -23,50 +23,27 @@ boolean searchOn;
 */
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-byte keyMap[4][4] = {{1, 2, 3, 10},
-  {4, 5, 6, 11},
-  {7, 8, 9, 12},
-  {14, 0, 15, 13}
+char keyMap[4][4] = {{'1', ' 2', '3', 'A'},
+  {'4', '5', '6', 'B'},
+  {'7', '8', '9', 'C'},
+  {'E', '0', 'F', 'D'}
 };
+
 //Keypad constructor ==> (makeKeymap(keys array), row array, column array,no. of rows, no. of columns)
 Keypad  keypad = Keypad(makeKeymap(keyMap), r, c, 4, 4);
 
 void setup()
 {
   Serial.begin(9600);
-  keypad.addEventListener(keypadEvent);
   lcd.begin(16, 2);
   lcd.clear();
   lcd.print("Enter Book-Code:");
   lcd.setCursor(5, 1);
   lcd.blink();
-  searchOn = false;
+  searchOn=false;
 }
 
 void loop()
-{
-  if (searchOn)
-  {
-    if (Serial.available())
-    {
-      Serial.readBytes(cardInput, 12);
-      cardInput[8] %= 16;
-      for (i = 0; i < 3; i++)
-      {
-        if (cardInput[i + 8] != userCode[i])
-          break;
-      }
-      if (i == 3)
-      {
-        lcd.clear();
-        lcd.setCursor(2, 1);
-        lcd.print("Book found!");
-      }
-    }
-  }
-}
-
-void keypadEvent(KeypadEvent key)
 {
   if (!userIpCount)
   {
@@ -76,18 +53,46 @@ void keypadEvent(KeypadEvent key)
     lcd.setCursor(5, 1);
     lcd.blink();
   }
-  userInput[userIpCount++] = key;
+  char key;
+  key = keypad.getKey();
+  if (key)
+  {
+    userInput[userIpCount++] = key;
+    lcd.print(key);
+  }
   if (userIpCount == 5)
   {
     userIpCount = 0;
-    userCode[0] = userInput[0];
+   /* userCode[0] = userInput[0];
     userCode[1] = 16 * userInput[1] + userInput[2];
     userCode[2] = 16 * userInput[3] + userInput[4];
+    */
     delay(500);
     lcd.clear();
     lcd.noCursor();
     lcd.setCursor(4, 0);
     lcd.print("Searching");
     searchOn = true;
+  }
+  if (searchOn)
+  {
+    if (Serial.available())
+    {
+      Serial.readBytes(cardInput, 12);
+      Serial.print("card id - ");
+      Serial.println(cardInput);
+      cardInput[8] %= 16;
+      for (i = 0; i < 5; i++)
+      {
+        if (cardInput[i +6] != userInput[i])
+          break;
+      }
+      if (i == 3)
+      {
+        lcd.clear();
+        lcd.setCursor(2, 1);
+        lcd.print("Book found!");
+      }
+    }
   }
 }
