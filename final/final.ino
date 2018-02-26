@@ -37,7 +37,7 @@ void setup()
   Serial.begin(9600);
   lcd.begin(16, 2);
   lcd.clear();
-  lcd.print("Enter Book-Code:");
+  lcd.print("Enter Code:");
   lcd.setCursor(5, 1);
   lcd.blink();
   searchOn = false;
@@ -53,7 +53,7 @@ void loop()
     {
       searchOn = false;
       lcd.clear();
-      lcd.print("Enter Book-Code:");
+      lcd.print("Enter Code:");
       lcd.setCursor(5, 1);
       lcd.blink();
     }
@@ -85,8 +85,8 @@ void loop()
       if (i == 5)
       {
         lcd.clear();
-        lcd.setCursor(2, 1);
-        lcd.print("Book found!");
+        lcd.setCursor(0, 1);
+        lcd.print("Positive Match!!");
       }
     }
   }
