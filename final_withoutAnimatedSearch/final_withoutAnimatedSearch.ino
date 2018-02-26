@@ -38,7 +38,7 @@ void setup()
   lcd.begin(16, 2);
   lcd.clear();
   lcd.println("  A Product by  ");
-  lcd.setCursor(0, 1);
+  lcd.setCursor(0,1);
   lcd.print("    AGJP Inc.");
   lcd.noBlink();
   delay(2000);
@@ -78,12 +78,11 @@ void loop()
   }
   if (searchOn)
   {
-    animateSearch();
     if (Serial.available())
     {
       Serial.readBytes(cardInput, 12);
-      // Serial.print("card id - ");
-      // Serial.println(cardInput);
+      Serial.print("card id - ");
+      Serial.println(cardInput);
       for (i = 0; i < 5; i++)
       {
         if (cardInput[i + 6] != userInput[i])
@@ -100,18 +99,4 @@ void loop()
   else
     while (Serial.available())
       Serial.read();
-}
-
-void animateSearch()
-{
-  byte pos;
-  lcd.setCursor(0, 1);
-  pos = byte(millis() / 1000) / 32;
-  if (pos / 16)
-    pos = 31 - pos;
-  for (i = 0; i < pos; i++)
-    lcd.print(" ");
-  lcd.print("-");
-  for (++i; i < 16; i++)
-    lcd.print(" ");
 }
