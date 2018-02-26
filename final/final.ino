@@ -37,6 +37,12 @@ void setup()
   Serial.begin(9600);
   lcd.begin(16, 2);
   lcd.clear();
+  lcd.println("  A Product by  ");
+  lcd.setCursor(0,1);
+  lcd.print("    AGJP Inc.");
+  lcd.noBlink();
+  delay(2000);
+  lcd.clear();
   lcd.print("Enter Code:");
   lcd.setCursor(5, 1);
   lcd.blink();
