@@ -78,7 +78,7 @@ void loop()
   }
   if (searchOn)
   {
-    animateSearch();
+    //animateSearch();
     if (Serial.available())
     {
       Serial.readBytes(cardInput, 12);
@@ -102,6 +102,7 @@ void loop()
       Serial.read();
 }
 
+/*
 void animateSearch()
 {
   byte pos;
@@ -115,3 +116,4 @@ void animateSearch()
   for (++i; i < 16; i++)
     lcd.print(" ");
 }
+*/
