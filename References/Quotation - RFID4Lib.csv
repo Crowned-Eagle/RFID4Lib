@@ -23,4 +23,4 @@ Acrylic Sheet (Sq. Meter),50,5,=B17*C17,=D17*2.2
 ,,,,
 ,,,,
 Total,=SUM(B3:B17),=SUM(C3:C17),=SUM(D3:D17),=SUM(E3:E17)
-Excluding Arduino Mega,,,,=E25-10560
+Excluding Arduino Mega,=B25-B4,1101,=D25-D4,=E25-E4
