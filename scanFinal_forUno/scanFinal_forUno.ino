@@ -11,10 +11,10 @@ boolean searchOn;
   The circuit for LCD:
    LCD RS pin to digital pin 12
    LCD Enable pin to digital pin 11
-   LCD D4 pin to digital pin 5
-   LCD D5 pin to digital pin 4
-   LCD D6 pin to digital pin 3
-   LCD D7 pin to digital pin 2
+   LCD D4 pin to digital pin 17
+   LCD D5 pin to digital pin 16
+   LCD D6 pin to digital pin 15
+   LCD D7 pin to digital pin 14
    LCD R/W pin to ground
    LCD VSS pin to ground
    LCD VCC pin to 5V
@@ -24,7 +24,7 @@ boolean searchOn;
 */
 
 LiquidCrystal lcd(12, 11, 17, 16, 15, 14);
-char keyMap[4][4] = {{'1', ' 2', '3', 'A'},
+char keyMap[4][4] = {{'1', '2', '3', 'A'},
   {'4', '5', '6', 'B'},
   {'7', '8', '9', 'C'},
   {'E', '0', 'F', 'D'}
