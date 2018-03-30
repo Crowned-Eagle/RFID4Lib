@@ -19,3 +19,5 @@ Akshay, 170+32+20=222, LCD Display; HookUp Wires; Connector Strip
 Dattaraj, 135, Hex Keypad Ebay
 Aniruddha, 260, MIFARE 13.56MHz RFID Reader
 Aniruddha, 181, 10 ISO 14443A RFID Sample Tags from China
+Aniruddha, 70, Winding Wire for RFID Antenna
+Aniruddha, 60, PVC Box for Demo Setup
