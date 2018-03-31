@@ -8,7 +8,7 @@
 #include <LiquidCrystal.h>
 #define buzzerPin 13
 
-byte i, r[4] = {2, 3, 4, 5}, c[4] = {6, 7, 8, 9};
+byte i, r[4] = {2, 3, 4, 5}, c[4] = {9,8,7,6};      //pins have changed to match the final design
 char userInput[5], userIpCount, cardInput[12];
 boolean searchOn, matched;
 

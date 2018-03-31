@@ -25,3 +25,4 @@ Dattaraj, 536, PCB and other components
 Aniruddha, 112, cutter and polish paper
 Akshay, 10, core cutting
 Dattaraj, 40, ferrite
+Dattaraj, 100, charger
