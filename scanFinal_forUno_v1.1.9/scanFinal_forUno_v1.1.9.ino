@@ -1,19 +1,28 @@
+/*
+   code for first demo after soldering
+*/
+
+
 #include <Keypad.h>
 #include <Key.h>
 #include <LiquidCrystal.h>
+#include<power.h>
+#define buzzerPin 13
+#define MAX_WDT 300000
 
-byte i, r[4] = {14, 15, 16, 17}, c[4] = {18, 19, 20, 21};
+byte i, r[4] = {2, 3, 4, 5}, c[4] = {6, 7, 8, 9};
 char userInput[5], userIpCount, cardInput[12];
-boolean searchOn;
+boolean searchOn, matched;
+int wdt;
 
 /*
   The circuit for LCD:
-   LCD RS pin to digital pin 12
-   LCD Enable pin to digital pin 11
-   LCD D4 pin to digital pin 5
-   LCD D5 pin to digital pin 4
-   LCD D6 pin to digital pin 3
-   LCD D7 pin to digital pin 2
+   LCD RS pin to digital pin A0
+   LCD Enable pin to digital pin A1
+   LCD D4 pin to digital pin A2
+   LCD D5 pin to digital pin A3
+   LCD D6 pin to digital pin A4
+   LCD D7 pin to digital pin A5
    LCD R/W pin to ground
    LCD VSS pin to ground
    LCD VCC pin to 5V
@@ -22,8 +31,8 @@ boolean searchOn;
    wiper to LCD VO pin (pin 3)
 */
 
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-char keyMap[4][4] = {{'1', ' 2', '3', 'A'},
+LiquidCrystal lcd(A0, A1, A2, A3, A4, A5);
+char keyMap[4][4] = {{'1', '2', '3', 'A'},
   {'4', '5', '6', 'B'},
   {'7', '8', '9', 'C'},
   {'E', '0', 'F', 'D'}
@@ -35,6 +44,8 @@ Keypad  keypad = Keypad(makeKeymap(keyMap), r, c, 4, 4);
 void setup()
 {
   Serial.begin(9600);
+  pinMode(buzzerPin, OUTPUT);
+  digitalWrite(buzzerPin, LOW);
   lcd.begin(16, 2);
   lcd.clear();
   lcd.println("  A Product by  ");
@@ -47,6 +58,8 @@ void setup()
   lcd.setCursor(5, 1);
   lcd.blink();
   searchOn = false;
+  matched = false;
+  wdt = 0;
 }
 
 void loop()
@@ -55,11 +68,13 @@ void loop()
   key = keypad.getKey();
   if (key)
   {
+    wdt=0;
     if (!userIpCount)
     {
       searchOn = false;
+      digitalWrite(buzzerPin, LOW);
       lcd.clear();
-      lcd.print("Enter Code:");
+      lcd.print("Enter Book-Code:");
       lcd.setCursor(5, 1);
       lcd.blink();
     }
@@ -72,18 +87,16 @@ void loop()
     delay(500);
     lcd.clear();
     lcd.noCursor();
-    lcd.setCursor(4, 0);
-    lcd.print("Searching");
+    lcd.setCursor(2, 0);
+    lcd.print("Searching ...");
     searchOn = true;
   }
   if (searchOn)
   {
-    animateSearch();
+    //animateSearch();
     if (Serial.available())
     {
       Serial.readBytes(cardInput, 12);
-      // Serial.print("card id - ");
-      // Serial.println(cardInput);
       for (i = 0; i < 5; i++)
       {
         if (cardInput[i + 6] != userInput[i])
@@ -91,19 +104,31 @@ void loop()
       }
       if (i == 5)
       {
+        matched = true;
         lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print(" Book found!!");
         lcd.setCursor(0, 1);
-        lcd.print("Positive Match!!");
+        lcd.print("Press, any key.");
+        digitalWrite(buzzerPin, HIGH);
+        delay(1200);
+        digitalWrite(buzzerPin, LOW);
       }
     }
   }
   else
+  {
     while (Serial.available())
       Serial.read();
+    wdt++;
+  }
+  if(wdt==MAX_WDT)
+  power_all_disable();
 }
 
-void animateSearch()
-{
+/*
+  void animateSearch()
+  {
   byte pos;
   lcd.setCursor(0, 1);
   pos = byte(millis() / 1000) / 32;
@@ -114,4 +139,5 @@ void animateSearch()
   lcd.print("-");
   for (++i; i < 16; i++)
     lcd.print(" ");
-}
+  }
+*/
