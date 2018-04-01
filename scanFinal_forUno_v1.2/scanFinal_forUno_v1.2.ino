@@ -1,6 +1,6 @@
 /*
- * code for first demo after soldering
- */
+   code for first demo after soldering
+*/
 
 
 #include <Keypad.h>
@@ -8,7 +8,9 @@
 #include <LiquidCrystal.h>
 #define buzzerPin 13
 
-byte i, r[4] = {2, 3, 4, 5}, c[4] = {9,8,7,6};      //pins have changed to match the final design
+byte i, r[4] = {9, 8, 7, 6}, c[4] = {5, 4, 3, 2}; //pins have changed to match the final design
+//i hope this is right order
+
 char userInput[5], userIpCount, cardInput[12];
 boolean searchOn, matched;
 
@@ -107,7 +109,7 @@ void loop()
         lcd.print("Press, any key.");
         digitalWrite(buzzerPin, HIGH);
         delay(1200);
-        digitalWrite(buzzerPin, LOW);        
+        digitalWrite(buzzerPin, LOW);
       }
     }
   }
