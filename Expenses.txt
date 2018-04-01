@@ -21,8 +21,8 @@ Aniruddha, 260, MIFARE 13.56MHz RFID Reader
 Aniruddha, 181, 10 ISO 14443A RFID Sample Tags from China
 Aniruddha, 70, Winding Wire for RFID Antenna
 Aniruddha, 60, PVC Box for Demo Setup
-Dattaraj, 536, PCB and other components
-Aniruddha, 112, cutter and polish paper
-Akshay, 10, core cutting
-Dattaraj, 40, ferrite
-Dattaraj, 100, charger
+Dattaraj, 536, PCB; Battery and other components
+Aniruddha, 112, Cutter and Polish Paper
+Akshay, 10, Core Cutting
+Dattaraj, 40, Ferrite Rod
+Dattaraj, 100, Charger
