@@ -32,10 +32,12 @@ int wdt;
 */
 
 LiquidCrystal lcd(A0, A1, A2, A3, A4, A5);
-char keyMap[4][4] = {{'1', '2', '3', 'A'},
-  {'4', '5', '6', 'B'},
-  {'7', '8', '9', 'C'},
-  {'E', '0', 'F', 'D'}
+char keyMap[4][4] = 
+{
+    {'1', '2', '3', 'A'},
+    {'4', '5', '6', 'B'},
+    {'7', '8', '9', 'C'},
+    {'E', '0', 'F', 'D'}
 };
 
 //Keypad constructor ==> (makeKeymap(keys array), row array, column array,no. of rows, no. of columns)
